@@ -36,7 +36,7 @@ server.use(morgan('dev'));
 // noinspection JSCheckFunctionSignatures
 server.use(
     morgan('combined', {
-        stream: fs.createWriteStream('./bin/access.log', { flags: 'a' }),
+        stream: fs.createWriteStream('./bin/error.log', { flags: 'a' }),
         skip(req, res) {
             return res.statusCode < 400;
         }
