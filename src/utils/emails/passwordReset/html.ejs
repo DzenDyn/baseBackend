@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset password confirmation</title>
+    <style>
+        @import 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Kanit:ital,wght@1,300';
+
+        body {
+            background-color: #5cdb95;
+            margin: 0;
+        }
+        .header {
+            background: #379683;
+            color: #EDF5E1;
+            border: 1px solid rgba(88, 91, 79, 0.3);
+
+            font-family: 'Dancing Script';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 36px;
+            text-align: center;
+            text-shadow:0px 1px 0px #2f6627;
+            line-height: 80px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .content {
+            background-color: #5cdb95;
+
+            min-height: 200px;
+            position: relative;
+        }
+
+        .confirm-text {
+            display: block;
+            font-family: Kanit;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 22px;
+            line-height: 21px;
+            color: #05386B;
+            /* identical to box height */
+
+            text-align: center;
+            margin: 20px 20px;
+        }
+
+        .confirm-text a{
+            color: #05386B;
+            text-decoration: none;
+        }
+
+        .button {
+            display:inline-block;
+            cursor:pointer;
+            background-color: #05386B;
+            color: #EDF5E1;
+            border-radius: 38px;
+            padding:20px 42px;
+
+            font-family: Kanit;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+
+            text-shadow:0px 1px 0px #2f6627;
+            text-decoration: none;
+
+        }
+
+        .buttonContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:active {
+            position:relative;
+            top:1px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        Dear <%= username %>, you have requested a password recovery on <%= siteName %>!
+    </div>
+    <div class="content">
+        <span class="confirm-text">If it wasn't you, just ignore this letter.
+            <br />To recover your password, click the button below or visit <a href="<%= url %>"><%= url %></a></span>
+        <div class="buttonContainer">
+            <a href="<%= url %>" class="button">Reset password</a>
+        </div>
+
+    </div>
+</body>
+</html>

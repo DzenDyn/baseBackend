@@ -1,0 +1,58 @@
+{
+  "name": "baseBackend",
+  "version": "1.0.0",
+  "main": "./bin/app.js",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/node": "^7.13.13",
+    "body-parser": "^1.19.0",
+    "connect": "^3.7.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "email-templates": "^8.0.7",
+    "express": "^4.17.1",
+    "express-openapi-validator": "^4.12.6",
+    "http-graceful-shutdown": "^3.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.6.2",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "swagger-routes-express": "^3.3.0",
+    "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.2",
+    "validator": "^13.5.2",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "scripts": {
+    "transpile": "babel ./src --out-dir bin --copy-files",
+    "clean": "rimraf bin",
+    "build": "npm-run-all clean transpile",
+    "server": "node ./bin/app.js",
+    "dev": "npm-run-all build server",
+    "start": "yarn dev",
+    "watch": "nodemon"
+  }
+}

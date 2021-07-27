@@ -1,0 +1,242 @@
+openapi: 3.0.3
+info:
+    title: Passport test
+    description: Test of passport.js
+    version: 1.0.0
+    license:
+        name: MIT License
+        url: https://opensource.org/licenses/MIT
+servers:
+    - url: https://localhost:3007/v1/
+paths:
+    /test/ping:
+        get:
+            description: 'Returns pong'
+            tags:
+                - Test
+            operationId: ping
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+    /test/subscription:
+        get:
+            description: 'Testing subscribers section'
+            tags:
+                - Test
+            operationId: testSubscription
+            security:
+                - access: ['subscriber']
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+    /test/private:
+        get:
+            description: 'Testing private section'
+            tags:
+                - Test
+            operationId: testPrivate
+            security:
+                - access: ['free']
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+    /user/register:
+        post:
+            description: 'Register user'
+            tags:
+                - User
+            operationId: userRegister
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                                nickname:
+                                    type: string
+                                password:
+                                    type: string
+                                    format: password
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                400:
+                    $ref: '#/components/responses/standardResponse'
+    /user/login:
+        post:
+            description: 'Login user'
+            tags:
+                - User
+            operationId: userLogin
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                                password:
+                                    type: string
+                                    format: password
+            responses:
+                200:
+                    description: Returns boolean success state and jwt object
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                    jwt:
+                                        type: object
+                400:
+                    $ref: '#/components/responses/standardResponse'
+    /user/refresh:
+        get:
+            description: 'Refresh token'
+            tags:
+                - User
+            operationId: userRefreshToken
+            responses:
+                200:
+                    $ref: '#/components/responses/jwtResponse'
+                403:
+                    $ref: '#/components/responses/standardResponse'
+    /user/logout:
+        get:
+            description: 'Logout user. Remove cookie. Remove refresh token in DB'
+            tags:
+                - User
+            operationId: userLogout
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                403:
+                    $ref: '#/components/responses/standardResponse'
+    /user/profile:
+        get:
+            description: 'Returns user object'
+            tags:
+                - User
+            operationId: userProfile
+            security:
+                - access: [ 'free' ]
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                403:
+                    $ref: '#/components/responses/standardResponse'
+    /user/resetOldSessions:
+        get:
+            description: 'Removes old sessions from DB'
+            tags:
+                - User
+            operationId: resetOldSessions
+            security:
+                - acess: [ 'admin' ]
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                403:
+                    $ref: '#/components/responses/standardResponse'
+                500:
+                    $ref: '#/components/responses/standardResponse'
+    /user/emailVerification/{verifyCode}:
+        get:
+            description: 'Email verification'
+            tags:
+                - User
+            operationId: emailVerification
+            parameters:
+                - name: verifyCode
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                500:
+                    $ref: '#/components/responses/standardResponse'
+
+    /user/requestPasswordReset/{email}:
+        get:
+            description: 'Password reset request'
+            tags:
+                - User
+            operationId: requestPasswordReset
+            parameters:
+                - name: email
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+
+    /user/passwordResetConfirmation/{verifyCode}:
+        post:
+            description: 'Password reset confirmation'
+            tags:
+                - User
+            operationId: passwordResetConfirmation
+            parameters:
+                - name: verifyCode
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                                nickname:
+                                    type: string
+                                password:
+                                    type: string
+                                    format: password
+            responses:
+                200:
+                    $ref: '#/components/responses/standardResponse'
+                500:
+                    $ref: '#/components/responses/standardResponse'
+
+components:
+    responses:
+        standardResponse:
+            description: Returns boolean success state and string message
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            success:
+                                type: boolean
+                            message:
+                                type: string
+        jwtResponse:
+            description: Returns boolean success state and jwt object
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            success:
+                                type: boolean
+                            jwt:
+                                type: object
